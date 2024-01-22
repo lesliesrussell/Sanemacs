@@ -15,9 +15,7 @@
   :commands (reload-config
 	     sanemacs/backward-kill-word)
   :bind (("C-<" . indent-rigidly-right-to-tab-stop)
-	 ("C->" . indent-rigidly-left-to-tab-stop)
-	 ("C-DEL" . sanemacs/backward-kill-word)
-	 ("M-DEL" . sanemacs/backward-kill-word))
+	 ("C->" . indent-rigidly-left-to-tab-stop))
   :custom ((inhibit-startup-screen t)
 	   (initial-scratch-message "")
 	   (use-short-answers t)
@@ -42,12 +40,6 @@
 (defun reload-config ()
   (interactive)
   (load-file (expand-file-name "init.el" user-emacs-directory)))
-
-(defun sanemacs/backward-kill-word ()
-(interactive "*")
-(push-mark)
-(backward-word)
-(delete-region (point) (mark)))
 
 (add-hook 'after-init-hook #'visual-line-mode)
 
