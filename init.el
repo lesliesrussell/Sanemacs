@@ -15,7 +15,8 @@
   :commands (reload-config
 	     sanemacs/backward-kill-word)
   :bind (("C-<" . indent-rigidly-right-to-tab-stop)
-	 ("C->" . indent-rigidly-left-to-tab-stop))
+	 ("C->" . indent-rigidly-left-to-tab-stop)
+	 ("C-x C-b" . ibuffer))
   :custom ((inhibit-startup-screen t)
 	   (initial-scratch-message "")
 	   (use-short-answers t)
@@ -41,7 +42,7 @@
   (interactive)
   (load-file (expand-file-name "init.el" user-emacs-directory)))
 
-(add-hook 'after-init-hook #'visual-line-mode)
+(add-hook 'after-init-hook #'global-visual-line-mode)
 
 (add-hook 'before-save-hook
 	  #'delete-trailing-whitespace)    ; Delete trailing
@@ -80,6 +81,7 @@
 				  tools/magit
 				  tools/vundo
 				  tools/visual-regexp
+				  tools/denote
 				 )))
   (sane-modules-load-modules
    sane-module-base-directory

@@ -24,7 +24,9 @@ All you need to do is be running Emacs v29 or better, clone the repo, install de
     'devour emacs --init-directory=$(pwd) --debug-init'
 to test the config out. Then if you like it just move it to ~/.config or symlink it, and run emacs the normal way.
 
-And that's it, an 86 line init.el, early-init.el is tiny too. Then you can go wild with packages. But if you are careful you can keep the load times slight.
+Out of the box, this config uses ef-themes because they are gorgeous and well designed. I also use mct because I think it is better than any of the alternaves (fido, ido, vertico, etc.) because it is light on resources, extends Emacs rather than replaces, and it works kinda how I like to work. I have added denote to my personal version of things and I might add it as a module with a generic config.
+
+And that's it, an 80 something line init.el, early-init.el is tiny too. Then you can go wild with packages. But if you are careful you can keep the load times slight.
 :END:
 ** Early init
 *** Header
@@ -99,31 +101,32 @@ You don't need this with version 30 of Emacs so just comment this block if you a
 *** Useful Defaults
 Just look how clean this is!
 #+begin_src elisp
-    (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
+  (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
 
-    (use-package emacs
-      :ensure nil
-      :commands (reload-config
-		 sanemacs/backward-kill-word)
-      :bind (("C-<" . indent-rigidly-right-to-tab-stop)
-	     ("C->" . indent-rigidly-left-to-tab-stop))
-      :custom ((inhibit-startup-screen t)
-	       (initial-scratch-message "")
-	       (use-short-answers t)
-	       (ring-bell-function 'ignore)
-	       (cursor-type 'bar)
-	       (frame-title-format '("%b"))
-	       (linum-format "%4d ")
-	       (custom-file (expand-file-name "custom.el" user-emacs-directory))
-	       (backup-by-copying t)
-	       (delete-old-versions t)
-	       (kept-new-versions 6)
-	       (kept-old-versions 2)
-	       (version-control t)
-	       (auto-save-list-file-prefix emacs-tmp-dir)
-	       (auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t)))
-	       (backup-directory-alist `((".*" . ,emacs-tmp-dir)))
-	       (create-lockfiles nil)))
+  (use-package emacs
+    :ensure nil
+    :commands (reload-config
+	       sanemacs/backward-kill-word)
+    :bind (("C-<" . indent-rigidly-right-to-tab-stop)
+	   ("C->" . indent-rigidly-left-to-tab-stop)
+	   ("C-x C-b" . ibuffer))
+    :custom ((inhibit-startup-screen t)
+	     (initial-scratch-message "")
+	     (use-short-answers t)
+	     (ring-bell-function 'ignore)
+	     (cursor-type 'bar)
+	     (frame-title-format '("%b"))
+	     (linum-format "%4d ")
+	     (custom-file (expand-file-name "custom.el" user-emacs-directory))
+	     (backup-by-copying t)
+	     (delete-old-versions t)
+	     (kept-new-versions 6)
+	     (kept-old-versions 2)
+	     (version-control t)
+	     (auto-save-list-file-prefix emacs-tmp-dir)
+	     (auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t)))
+	     (backup-directory-alist `((".*" . ,emacs-tmp-dir)))
+	     (create-lockfiles nil)))
 #+end_src
 *** Custom file
 Offload the custom-set-variables to a separate file
@@ -152,7 +155,7 @@ I don't use this. But left it incase.
 *** Hooks
 **** after init hook
 #+begin_src elisp
-  (add-hook 'after-init-hook #'visual-line-mode)
+  (add-hook 'after-init-hook #'global-visual-line-mode)
 #+end_src
 **** before save
 #+begin_src elisp
@@ -218,6 +221,7 @@ The code can be used to customize and load configurations for Emacs packages, pa
 				    tools/magit
 				    tools/vundo
 				    tools/visual-regexp
+				    tools/denote
 				   )))
     (sane-modules-load-modules
      sane-module-base-directory
