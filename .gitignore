@@ -9,3 +9,6 @@ _sass-cache
 *#
 
 Gemfile.lock
+/eln-cache/
+/elpa/
+/recentf
