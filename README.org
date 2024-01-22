@@ -8,39 +8,41 @@
 :Website: https://sanemacs.com
 :END:
 
+:INFO:
 A minimal Emacs config that does just enough and nothing more.
 Sanemacs sets up a variety of tasteful defaults, MELPA, use-package, and undo-tree to provide for a great out-of-the-box Emacs experience.
 
-- **Performance Tuning**:
+- *Performance Tuning*:
   - Adjusts garbage collection thresholds for improved performance.
   - Increases the maximum read process output.
 
-- **UI Customization**:
+- *UI Customization*:
   - Disables the menu bar, tool bar, and scroll bar for a distraction-free interface.
 
-- **Bug Fix**:
+- *Bug Fix*:
   - Addresses a bug related to GNU archive download for specific Emacs versions.
 
-- **Package Management**:
+- *Package Management*:
   - Configures package.el and sets up the use-package package if not already installed.
 
-- **Useful Defaults**:
+- *Useful Defaults*:
   - Sets various default behaviors and configurations for a more streamlined Emacs experience.
 
-- **Keybindings**:
+- *Keybindings*:
   - Defines custom keybindings for specific actions.
 
-- **Customization File**:
+- *Customization File*:
   - Manages the custom-set-variables in a separate file for better organization.
 
-- **File Management**:
+- *File Management*:
   - Specifies the location for auto-save and backup files.
 
-- **Theme**:
+- *Theme*:
   - Loads the "wheatgrass" theme if no custom themes are enabled.
 
-- **Configuration Reloading**:
+- *Configuration Reloading*:
   - Defines a function to reload the Emacs configuration.
+:END:
 ** Early init
 *** Header
 #+begin_src elisp :tangle early-init.el
@@ -62,7 +64,6 @@ The provided code is a common optimization technique for Emacs initialization to
 #+begin_src elisp :tangle early-init.el
   (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
-
 
   (add-hook 'after-init-hook #'(lambda ()
 				 ;; restore after startup
@@ -94,8 +95,10 @@ The provided code is a common optimization technique for Emacs initialization to
   ;;; Make changes in README.org
 #+end_src
 *** Install [[https://github.com/slotThe/vc-use-package][vc-use-package]]
+:INFO:
 This package adds a key word ':vc' to 'use-package' so that we can have beautiful clean statements to install packages.
 You don't need this with version 30 of Emacs so just comment this block if you are running 30.
+:END:
 #+begin_src elisp
   (unless (package-installed-p 'vc-use-package)
     (package-vc-install "https://github.com/slotThe/vc-use-package"))
@@ -179,28 +182,26 @@ to gitignore your custom.el if you see fit.
 #+end_src
 ** Packages
 Because of recent advancements in Emacs we no longer need melpa we can have use-package do all the heavy lifting for us.
-i*** sane modules
+*** sane modules
 :INFO:
-The provided code is an Emacs Lisp package for SANE modules, which are used for customizing options and loading configurations for Emacs packages. The code defines several customizable variables related to SANE modules, such as the base directory, module list, and configuration list. It also includes functions for expanding paths, finding config files, and loading modules. Here's a brief explanation of the code:
+SANE modules, are used for customizing options and loading configurations for Emacs packages. The code defines several customizable variables related to SANE modules, such as the base directory, module list, and configuration list. It also includes functions for expanding paths, finding config files, and loading modules. Here's a brief explanation of the code:
 
-### Variables
+Variables
 The code defines the following customizable variables for SANE modules:
 - `sane-module-base-directory`: Base directory for SANE modules.
 - `sane-module-module-list`: List of SANE modules to load.
 - `sane-module-config-list`: List of SANE module configurations.
 
-### Functions
+Functions
 The code includes the following functions:
 - `sane-modules-expand-paths`: Expands each symbol in the module list to a subdirectory path within the base directory and returns a list of valid paths.
 - `sane-modules-find-config-files`: Finds 'config.el' files within each directory in the given list and returns a list of fully expanded file paths for the valid 'config.el' files.
 - `sane-modules-load-files`: Loads files from the given file list, with an option to report the load time for each file.
 - `sane-modules-load-modules`: Loads configuration files for modules in the module list under the base directory, with an option to report the load time for each file.
 
-The code is designed to be used as part of Sanemacs, a minimal Emacs configuration framework that organizes packages, configurations, and commands into easily enable/disable units called modules[2].
+The code is designed to be used as part of Sanemacs, a minimal Emacs configuration framework that organizes packages, configurations, and commands into easily enable/disable units called modules.
 
-The code can be used to customize and load configurations for Emacs packages, particularly within the context of Sanemacs and its module system[2].
-
-Please note that the provided code is specific to Emacs Lisp and the Sanemacs framework. If you have any specific questions about the code or its usage, feel free to ask for more details.
+The code can be used to customize and load configurations for Emacs packages, particularly within the context of Sanemacs and its module system.
 :END:
 #+begin_src elisp
   (setq lisp-dir (expand-file-name "lisp" user-emacs-directory))
@@ -215,27 +216,21 @@ Please note that the provided code is specific to Emacs Lisp and the Sanemacs fr
     :config
     (setq sane-module-base-directory (concat user-emacs-directory "modules/"))
     (setq sane-module-module-list '(;;; Sanemacs extended configuration
-				    ;; sane-core
-				    ;; sane-ui
-				    ;; sane-bindings
-				    ;;; Needful things
-				    need-vundo
-				    need-efthemes
-				    ;;; org mode things
-				    org-modern
-				    ;;; ui things
-				    emacs-dashboard
-				    magit
-				    popper
-				    iedit
-				    helpful
-				    edit-indirect
-				    visual-regexp
-				    mct
-				    which-key
-				    expand-region
-				    rainbow-mode
-				    ui/test
+				    ;;; ui
+				    ui/mct
+				    ui/popper
+				    ui/org-modern
+				    ui/rainbow-mode
+				    ui/ef-themes
+				    ;;; tools
+				    tools/edit-indirect
+				    tools/emacs-dashboard
+				    tools/expand-region
+				    tools/helpful
+				    tools/iedit
+				    tools/magit
+				    tools/vundo
+				    tools/visual-regexp
 				   )))
     (sane-modules-load-modules
      sane-module-base-directory
@@ -245,4 +240,5 @@ Please note that the provided code is specific to Emacs Lisp and the Sanemacs fr
 Yes, you can continue adding to this file. it isn't really a bad idea. But you might want to break things up into modules and see if that makes your life easier.
 Maybe, maybe not.
 #+begin_src elisp
+  Your changes might go here.
 #+end_src

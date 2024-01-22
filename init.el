@@ -73,27 +73,21 @@
   :config
   (setq sane-module-base-directory (concat user-emacs-directory "modules/"))
   (setq sane-module-module-list '(;;; Sanemacs extended configuration
-				  ;; sane-core
-				  ;; sane-ui
-				  ;; sane-bindings
-				  ;;; Needful things
-				  need-vundo
-				  need-efthemes
-				  ;;; org mode things
-				  org-modern
-				  ;;; ui things
-				  emacs-dashboard
-				  magit
-				  popper
-				  iedit
-				  helpful
-				  edit-indirect
-				  visual-regexp
-				  mct
-				  which-key
-				  expand-region
-				  rainbow-mode
-				  ui/test
+				  ;;; ui
+				  ui/mct
+				  ui/popper
+				  ui/org-modern
+				  ui/rainbow-mode
+				  ui/ef-themes
+				  ;;; tools
+				  tools/edit-indirect
+				  tools/emacs-dashboard
+				  tools/expand-region
+				  tools/helpful
+				  tools/iedit
+				  tools/magit
+				  tools/vundo
+				  tools/visual-regexp
 				 )))
   (sane-modules-load-modules
    sane-module-base-directory
