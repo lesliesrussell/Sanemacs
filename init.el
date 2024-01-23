@@ -65,23 +65,32 @@
   :load-path sane-dir
   :config
   (setq sane-module-base-directory (concat user-emacs-directory "modules/"))
-  (setq sane-module-module-list '(;;; Sanemacs extended configuration
+  (setq sane-module-module-list '(;;; Sanemaces extended configuration
 				  ;;; ui
 				  ui/mct
 				  ui/popper
 				  ui/org-modern
 				  ui/rainbow-mode
-				  ui/ef-themes
+				  ;; ui/ef-themes
+				  ui/golden
 				  ;;; tools
 				  tools/edit-indirect
-				  tools/emacs-dashboard
+				  ;; tools/emacs-dashboard
 				  tools/expand-region
 				  tools/helpful
 				  tools/iedit
+				  tools/hydra
 				  tools/magit
 				  tools/vundo
 				  tools/visual-regexp
 				  tools/denote
+				  tools/active-region
+				  tools/perspective
+				  ;;; prose
+				  writing/fountain
+				  writing/darkroom
+				  ;;; testing
+				  testing/embark
 				 )))
   (sane-modules-load-modules
    sane-module-base-directory

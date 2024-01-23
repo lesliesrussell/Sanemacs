@@ -1,6 +1,7 @@
 (use-package helpful
   :vc (:fetcher github :repo Wilfred/helpful)
-  :defer t
+  :ensure t
+  ;; :requires (elisp-refs dash s f)
   :bind
   ("C-h f" . #'helpful-callable)
   ("C-h v" . #'helpful-variable)

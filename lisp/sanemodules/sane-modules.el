@@ -25,12 +25,47 @@
   :type '(repeat string)
   :group 'sane-modules)
 
+(defcustom sane-module-template
+  (concat ";;; %s.el --- Description of the package -*- lexical-binding: t; -*-\n\n"
+          ";;; Commentary:\n"
+          ";; This file contains the '%s' package with functionalities:\n"
+          ";; - ...\n\n"
+          ";;; Code:\n\n"
+          "(use-package %s\n"
+          "  :ensure t\n"
+          "  ;; Add your configuration here\n\n"
+          "  )\n\n"
+          ";;; Provide\n(provide '%s)\n\n"
+          ";;; %s.el ends here\n")
+  "Module template string."
+  :type 'string
+  :group 'sane-modules)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;                             C O D E                                     ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'cl-lib)
+
+(defun sane-create-project-with-template ()
+  "Create a new project directory, and a config.el file with a template."
+  (interactive)
+  (let* ((dir (read-string "Enter the directory path: "))
+         (project-name (read-string "Enter the project name: "))
+         (full-path (expand-file-name (concat sane-module-base-directory dir "/" project-name))))
+    (message full-path)  ; Display the full path in the minibuffer
+    (unless (file-exists-p full-path)
+      (make-directory full-path t))
+    (let ((config-file (concat full-path "/config.el")))
+      (find-file config-file)
+      (insert (sane-generate-elisp-template project-name))
+      (save-buffer))))
+
+(defun sane-generate-elisp-template (name)
+  "Generate a template for an Emacs Lisp file.
+   NAME is the name of the package to be used in the template."
+  (format sane-module-template name name name name name))
 
 ;;;###autoload
 (defun sane-modules-expand-paths (base-directory module-list)

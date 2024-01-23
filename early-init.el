@@ -17,8 +17,10 @@
 (if (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 
-(if (not custom-enabled-themes)
-    (load-theme 'wheatgrass t))
+;; (if (not custom-enabled-themes)
+;;     (load-theme 'wheatgrass t))
+  (if (not custom-enabled-themes)
+    (load-theme 'leuven-dark t))
 
 (when (version< emacs-version "26.3")
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))

@@ -3,9 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(denote))
+ '(package-selected-packages '(perspective))
  '(package-vc-selected-packages
-   '((denote :vc-backend Git :url "https://github.com/protesilaos/denote"))))
+   '((perspective :vc-backend Git :url "http://github.com/nex3/perspective-el"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
