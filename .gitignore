@@ -13,4 +13,4 @@ Gemfile.lock
 /elpa/
 /recentf
 /transient/
-/modules/tools/denote/
+.gitignore

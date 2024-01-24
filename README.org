@@ -6,9 +6,13 @@
 :PROPERTIES:
 :Sanemacs version: 0.4.0
 :END:
+
+
 This is my personal config it has been sanitized and refactored a little. I was going to offer this as a pull req for the original Sanemacs which I have been using for years because it is great, but then I thought about it and realized that it doesn't really fit the Sanemacs ethos.
 
 I'll leave this here because I think it has some value.
+
+
 :INFO:
 Stolen completely from Sanemacs because I like it as a base, but I made some changes.
 - literate config
