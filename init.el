@@ -42,6 +42,25 @@
   (interactive)
   (load-file (expand-file-name "init.el" user-emacs-directory)))
 
+(defun search-and-start-iedit (search-term)
+  "Search for SEARCH-TERM and start iedit-mode on its occurrences."
+  (interactive "sEnter search term: ")
+  (let ((case-fold-search t)) ; Set this to nil if you want case-sensitive search
+    (goto-char (point-min))   ; Start from the beginning of the buffer
+    (search-forward search-term nil t)
+    (backward-word)
+    (iedit-mode)))          ; Activate iedit-mode on the current occurrence
+
+(defun kill-and-replace-thing-at-point (thing)
+  "Kill the THING at point and prepare for replacement."
+  (let ((bounds (bounds-of-thing-at-point thing)))
+    (when bounds
+      (kill-region (car bounds) (cdr bounds)))))
+
+;; Usage example:
+;; (kill-and-replace-thing-at-point 'word)  ; Kills the word at point
+;; (global-set-key (kbd "C-c k") (lambda () (interactive) (kill-and-replace-thing-at-point 'word)))
+
 (add-hook 'after-init-hook #'global-visual-line-mode)
 
 (add-hook 'before-save-hook
@@ -71,6 +90,7 @@
 				  ui/popper
 				  ui/org-modern
 				  ui/rainbow-mode
+				  ui/sane-mode
 				  ;; ui/ef-themes
 				  ui/golden
 				  ;;; tools

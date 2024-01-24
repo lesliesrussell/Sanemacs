@@ -6,7 +6,9 @@
 :PROPERTIES:
 :Sanemacs version: 0.4.0
 :END:
+This is my personal config it has been sanitized and refactored a little. I was going to offer this as a pull req for the original Sanemacs which I have been using for years because it is great, but then I thought about it and realized that it doesn't really fit the Sanemacs ethos.
 
+I'll leave this here because I think it has some value.
 :INFO:
 Stolen completely from Sanemacs because I like it as a base, but I made some changes.
 - literate config
@@ -154,6 +156,29 @@ I don't use this. But left it incase.
   (backward-word)
   (delete-region (point) (mark)))
 #+end_src
+**** search and iedit
+#+begin_src elisp
+  (defun search-and-start-iedit (search-term)
+    "Search for SEARCH-TERM and start iedit-mode on its occurrences."
+    (interactive "sEnter search term: ")
+    (let ((case-fold-search t)) ; Set this to nil if you want case-sensitive search
+      (goto-char (point-min))   ; Start from the beginning of the buffer
+      (search-forward search-term nil t)
+      (backward-word)
+      (iedit-mode)))          ; Activate iedit-mode on the current occurrence
+#+end_src
+**** kill thing at point with examples
+#+begin_src elisp
+  (defun kill-and-replace-thing-at-point (thing)
+  "Kill the THING at point and prepare for replacement."
+  (let ((bounds (bounds-of-thing-at-point thing)))
+    (when bounds
+      (kill-region (car bounds) (cdr bounds)))))
+
+;; Usage example:
+;; (kill-and-replace-thing-at-point 'word)  ; Kills the word at point
+;; (global-set-key (kbd "C-c k") (lambda () (interactive) (kill-and-replace-thing-at-point 'word)))
+#+end_src
 *** Hooks
 **** after init hook
 #+begin_src elisp
@@ -213,6 +238,7 @@ The code can be used to customize and load configurations for Emacs packages, pa
 				    ui/popper
 				    ui/org-modern
 				    ui/rainbow-mode
+				    ui/sane-mode
 				    ;; ui/ef-themes
 				    ui/golden
 				    ;;; tools
