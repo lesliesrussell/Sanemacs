@@ -14,6 +14,8 @@
 
   ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
   ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+  ;; https://www.reddit.com/r/emacs/comments/19ec8v5/weekly_tips_tricks_c_thread/
+  (define-key minibuffer-local-map [C-.] 'embark-select)
   :config
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
