@@ -222,6 +222,15 @@ I don't use this. But left it incase.
 				       (user-error (format "%s\n%s" command output))))))
       (set-process-filter proc #'comint-output-filter)))
 #+end_src
+**** git status
+#+begin_src elisp
+  (defun vc-git-status ()
+    "Run git status on the current directory and display the results."
+    (interactive)
+    (shell-command "git status"))
+
+  (global-set-key (kbd "C-x v .") #'vc-git-status)
+#+end_src
 *** Hooks
 **** after init hook
 #+begin_src elisp

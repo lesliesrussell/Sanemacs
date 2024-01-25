@@ -98,6 +98,13 @@
 				     (user-error (format "%s\n%s" command output))))))
     (set-process-filter proc #'comint-output-filter)))
 
+(defun vc-git-status ()
+  "Run git status on the current directory and display the results."
+  (interactive)
+  (shell-command "git status"))
+
+(global-set-key (kbd "C-x v .") #'vc-git-status)
+
 (add-hook 'after-init-hook #'global-visual-line-mode)
 
 (add-hook 'before-save-hook
