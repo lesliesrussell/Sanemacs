@@ -55,8 +55,6 @@ Code for optimizing the garbage collection threshold and the maximum amount of d
 - The `add-hook` function adds a hook to run the given function after Emacs has finished initializing. In this case, it sets the `gc-cons-threshold` to 800,000 after initialization.
 
 The `gc-cons-threshold` is the number of bytes of memory allocation before a garbage collection is invoked. Setting it to a higher value can improve performance during startup, but it may lead to longer pauses during regular use[4]. The `read-process-output-max` variable sets the maximum amount of data to read from a process, and increasing it can be useful for improving the performance of certain Emacs packages.
-
-The provided code is a common optimization technique for Emacs initialization to balance startup performance and memory management. It sets a higher garbage collection threshold during startup and then restores it to a lower value after initialization to improve overall performance.
 :END:
 #+begin_src elisp :tangle early-init.el
   (setq gc-cons-threshold 100000000)
@@ -82,7 +80,12 @@ The provided code is a common optimization technique for Emacs initialization to
     (if (not custom-enabled-themes)
       (load-theme 'leuven-dark t))
 #+end_src
-*** Fix [[https://www.reddit.com/r/emacs/comments/cueoug/the_failed_to_download_gnu_archive_is_a_pretty/][bug]]
+*** COMMENT Fix [[https://www.reddit.com/r/emacs/comments/cueoug/the_failed_to_download_gnu_archive_is_a_pretty/][bug]]
+:INFO:
+
+I am not 100% sure this is required anymore, I've tested with and without and no change. I have it commented so that it will not tangle. If you need it it is here.
+
+:END:
 #+begin_src elisp :tangle early-init.el
   (when (version< emacs-version "26.3")
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
@@ -160,7 +163,8 @@ I don't use this. But left it incase.
   (backward-word)
   (delete-region (point) (mark)))
 #+end_src
-**** search and iedit
+**** DONE COMMENT search and iedit :move:
+This needs to be moved into the iedit module
 #+begin_src elisp
   (defun search-and-start-iedit (search-term)
     "Search for SEARCH-TERM and start iedit-mode on its occurrences."
@@ -183,7 +187,12 @@ I don't use this. But left it incase.
 ;; (kill-and-replace-thing-at-point 'word)  ; Kills the word at point
 ;; (global-set-key (kbd "C-c k") (lambda () (interactive) (kill-and-replace-thing-at-point 'word)))
 #+end_src
-**** git clone
+**** TODO vc-git stuff
+At some point all this will be a package of a module.
+You know I might need to change the modules thing so that it just loads packages.
+The modules thing was fun to play with but the more I think of it the more I realize it
+is overkill. use-package does it all I just need to figure out a way to handle the management.
+***** git clone
 #+begin_src elisp
   ;; -*- lexical-binding: t -*-
 
@@ -222,7 +231,8 @@ I don't use this. But left it incase.
 				       (user-error (format "%s\n%s" command output))))))
       (set-process-filter proc #'comint-output-filter)))
 #+end_src
-**** git status
+***** git status
+So the fact of it is that ~vc-dir~ is better and I might just alias that
 #+begin_src elisp
   (defun vc-git-status ()
     "Run git status on the current directory and display the results."
