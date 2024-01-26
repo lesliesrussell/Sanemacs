@@ -262,6 +262,7 @@ So the fact of it is that ~vc-dir~ is better and I might just alias that
 #+end_src
 ** Packages
 *** sane modules
+At this point, the only reason I am keeping this is for organization.
 :INFO:
 SANE modules, are used for customizing options and loading configurations for Emacs packages. The code defines several customizable variables related to SANE modules, such as the base directory, module list, and configuration list. It also includes functions for expanding paths, finding config files, and loading modules. Here's a brief explanation of the code:
 
