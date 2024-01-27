@@ -139,6 +139,10 @@ Just look how clean this is!
 	     (backup-directory-alist `((".*" . ,emacs-tmp-dir)))
 	     (create-lockfiles nil)))
 #+end_src
+*** auto revert mode
+#+begin_src elisp
+  (auto-revert-mode 1)
+#+end_src
 *** Custom file
 Offload the custom-set-variables to a separate file
 This keeps your init.el neater and you have the option
@@ -155,7 +159,7 @@ to gitignore your custom.el if you see fit.
     (load-file (expand-file-name "init.el" user-emacs-directory)))
 #+end_src
 **** COMMENT Backward kill word
-I don't use this. But left it incase.
+I don't use this. But left it in case.
 #+begin_src elisp
   (defun sanemacs/backward-kill-word ()
   (interactive "*")
@@ -231,16 +235,6 @@ is overkill. use-package does it all I just need to figure out a way to handle t
 				       (user-error (format "%s\n%s" command output))))))
       (set-process-filter proc #'comint-output-filter)))
 #+end_src
-***** git status
-So the fact of it is that ~vc-dir~ is better and I might just alias that
-#+begin_src elisp
-  (defun vc-git-status ()
-    "Run git status on the current directory and display the results."
-    (interactive)
-    (shell-command "git status"))
-
-  (global-set-key (kbd "C-x v .") #'vc-git-status)
-#+end_src
 *** Hooks
 **** after init hook
 #+begin_src elisp
@@ -305,13 +299,14 @@ The code can be used to customize and load configurations for Emacs packages, pa
 				    ;; ui/ef-themes
 				    ui/golden
 				    ;;; tools
+				    tools/vc-git-plus
 				    tools/edit-indirect
 				    ;; tools/emacs-dashboard
 				    tools/expand-region
 				    tools/helpful
 				    tools/iedit
 				    tools/hydra
-				    tools/magit
+				    ;; tools/magit
 				    tools/vundo
 				    tools/visual-regexp
 				    tools/denote

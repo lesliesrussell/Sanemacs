@@ -35,6 +35,8 @@
 	   (backup-directory-alist `((".*" . ,emacs-tmp-dir)))
 	   (create-lockfiles nil)))
 
+(auto-revert-mode 1)
+
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
 
@@ -89,13 +91,6 @@
 				     (user-error (format "%s\n%s" command output))))))
     (set-process-filter proc #'comint-output-filter)))
 
-(defun vc-git-status ()
-  "Run git status on the current directory and display the results."
-  (interactive)
-  (shell-command "git status"))
-
-(global-set-key (kbd "C-x v .") #'vc-git-status)
-
 (add-hook 'after-init-hook #'global-visual-line-mode)
 
 (add-hook 'before-save-hook
@@ -129,13 +124,14 @@
 				  ;; ui/ef-themes
 				  ui/golden
 				  ;;; tools
+				  tools/vc-git-plus
 				  tools/edit-indirect
 				  ;; tools/emacs-dashboard
 				  tools/expand-region
 				  tools/helpful
 				  tools/iedit
 				  tools/hydra
-				  tools/magit
+				  ;; tools/magit
 				  tools/vundo
 				  tools/visual-regexp
 				  tools/denote
